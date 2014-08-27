@@ -31,7 +31,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.baseURL = '/ember-diagonal'; // Testem prefers this...
   }
 
   return ENV;
