@@ -1,5 +1,3 @@
-import "vendor/d3";
-
 export default Em.Component.extend({
   buildVisualization: function () {
     if(!this.get('routeTree')) {
@@ -26,6 +24,11 @@ export default Em.Component.extend({
       .append("g")
      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+     var visFunc = function (route) {
+         if (!component.isVisible(route)) {
+            return 'none';
+         }
+     };
     var root = this.get('routeTree');
 
     // Compute the new tree layout.
@@ -42,24 +45,32 @@ export default Em.Component.extend({
     // Enter the nodes.
     var nodeEnter = node.enter().append("g")
      .attr("class", "node")
+     .style('display', visFunc)
+     .style('cursor', 'pointer')
+     .on('click', function (route) {
+       component.sendAction('action', route);
+     })
      .attr("transform", function(d) { 
       return "translate(" + d.y + "," + d.x + ")"; });
 
     nodeEnter.append("circle")
      .attr("r", 10)
-     .style("fill", "#fff");
+     .style("fill", "#fff")
+
 
     nodeEnter.append("text")
      .attr("x", function(d) { 
       return d.children || d._children ? -13 : 13; })
      .attr("dy", ".35em")
+     .on('click', function (route) {
+       component.sendAction('action', route);
+     })
+     .style('cursor', 'pointer')
      .attr("text-anchor", function(d) { 
       return d.children || d._children ? "end" : "start"; })
      .text(function(d) { return d.name; })
      .style("fill-opacity", 1)
-     .on('click', function (route) {
-       component.sendAction('action', route);
-     });
+     .style('display', visFunc);
 
     // Declare the linksâ€¦
     var link = svg.selectAll("path.link")
@@ -68,8 +79,24 @@ export default Em.Component.extend({
     // Enter the links.
     link.enter().insert("path", "g")
      .attr("class", "link")
-     .attr("d", diagonal);
+     .attr("d", diagonal)
+     .style('display', function (link) {
+        return visFunc(link.target);
+     });
 
 
-  }.on('didInsertElement').observes('routeTree')
+  }.on('didInsertElement').observes('routeTree', 'isShowingSubStates'),
+
+  isVisible: function (route) {
+    if(!route) { return false; }
+    if(this.get('isShowingSubStates')) {
+      return true;
+    }
+
+    return !this.isSubState(route);
+  },
+
+  isSubState: function (route) {
+    return route.name.match(/(^|\.)(loading|error)$/);
+  }
 });

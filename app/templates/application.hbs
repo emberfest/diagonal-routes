@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2 id='title'>Diagonal Routes</h2>
-      {{textarea value=routesInput rows=10 cols=100}}
+      {{code-editor value=routesInput}}
     </div>
   </div>
 
@@ -25,8 +25,16 @@
             {{input type='checkbox' checked=isShowingSubStates}}
           </label>
         </p>
-        {{!-- {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}} --}}
-        {{route-tree routeTree=routeTree isShowingSubStates=isShowingSubStates action='showRoute'}}
+        <ul class="nav nav-tabs" role="tablist">
+          <li {{bind-attr class="isShowingTree:active"}}><a href="#" {{action 'showTree'}}>Tree</a></li>
+          <li {{bind-attr class="isShowingList:active"}}><a href="#" {{action 'showList'}}>List</a></li>
+        </ul>
+
+        {{#if isShowingTree}}
+          {{route-tree routeTree=routeTree isShowingSubStates=isShowingSubStates action='showRoute'}}
+        {{else}}
+          {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}}
+        {{/if}}
       </div>
       <div class="col-md-6">
         {{outlet}}

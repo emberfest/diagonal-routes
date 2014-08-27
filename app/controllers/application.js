@@ -3,6 +3,8 @@ import RouteDebug from "diagonal/lib/route-debug";
 
 export default Ember.Controller.extend({
   isShowingSubStates: false,
+  isShowingTree: true,
+  isShowingList: Em.computed.not('isShowingTree'),
 
   queryParams: ['routesInput'],
 
@@ -123,6 +125,12 @@ export default Ember.Controller.extend({
   actions: {
     showRoute: function(route) {
       this.transitionToRoute('route', route.name);
+    },
+    showTree: function () {
+      this.set('isShowingTree', true);
+    },
+    showList: function () {
+      this.set('isShowingTree', false);
     }
   }
 });
