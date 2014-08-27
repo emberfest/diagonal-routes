@@ -1,7 +1,11 @@
 <div class="container">
-  <h2 id='title'>Welcome to Ember.js</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 id='title'>Diagonal Routes</h2>
+      {{textarea value=routesInput rows=10 cols=100}}
+    </div>
+  </div>
 
-  {{textarea value=routesInput rows=10 cols=100}}
 
 
   {{#if isError}}
@@ -14,13 +18,19 @@
       </p>
     </div>
   {{else}}
-    <p>
-      <label>Show loading/error substates
-        {{input type='checkbox' checked=isShowingSubStates}}
-      </label>
-    </p>
-    {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}}
+    <div class="row">
+      <div class="col-md-6">
+        <p>
+          <label>Show loading/error substates
+            {{input type='checkbox' checked=isShowingSubStates}}
+          </label>
+        </p>
+        {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}}
+      </div>
+      <div class="col-md-6">
+        {{outlet}}
+      </div>
+    </div>
   {{/if}}
 
-  {{outlet}}
 </div>

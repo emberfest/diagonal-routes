@@ -1,1 +1,25 @@
 <h1>Showing route {{value.name}}</h1>
+
+{{log value}}
+<dl>
+  <dt>Url</dt>
+  <dd>
+    {{#if value.url}}
+      <code>{{value.url}}</code>
+    {{else}}
+      <p>This route has no URL, as it is a parent route. You will always be in a child state of this route (which by default is called <code>{{value.name}}.index</code>)</p>
+    {{/if}}
+  </dd>
+  <dt>Type</dt>
+  <dd>{{value.type}}</dd>
+  <dt>Route Class</dt>
+  <dd><code>{{value.routeHandler.className}}</code></dd>
+  <dt>Controller</dt>
+  <dd><code>App.{{value.controller.className}}</code></dd>
+  <dt>Template</dt>
+  <dd><code>{{value.template.name}}</code></dd>
+  <dt>Template Outline</dt>
+  <dt>
+    {{template-visualization parents=parentsAndSelf}}
+  </dt>
+</dl>

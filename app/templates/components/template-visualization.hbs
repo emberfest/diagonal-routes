@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    {{link-to name 'route' name}}
+  </div>
+  <div class="panel-body">
+    {{#if tail.length}}
+      {{template-visualization parents=tail}}
+    {{else}}
+      {{#if hasChildren}}
+        <code>\{{outlet}}</code> contains one of:
+        <ul>
+          {{#each route.children}}
+            <li>{{link-to value.name 'route' value.name}}</li>
+          {{/each}}
+        </ul>
+      {{else}}
+        No <code>\{{outlet}}</code> in {{name}}
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
+
+

@@ -9,7 +9,9 @@ export default Ember.Controller.extend({
     "this.resource('post', {path: '/posts/:post_id'}, function () {\n" +
     "  this.route('new');\n" +
     "  this.route('edit');\n" +
-    "  this.resource('comments');\n" +
+    "  this.resource('comments', function() {\n" +
+    "    this.route('new');\n" +
+    "  });\n" +
     "});\n" +
     "this.route('signup');"
   }),
@@ -44,13 +46,16 @@ export default Ember.Controller.extend({
     }
   },
 
-  addParents: function (node, parent) {
+  addParents: function (node, parent, parents) {
+    parents = (parents && parents.slice()) || [];
     if(parent) {
       node.parent = parent;
+      parents.push(parent);
     }
+    node.parents = parents;
     if(node.children && node.children.length) {
       node.children.forEach(function (child) {
-        this.addParents(child, node);
+        this.addParents(child, node, parents);
       }, this);
     }
     return node;
@@ -61,18 +66,31 @@ export default Ember.Controller.extend({
   }),
 
   errorLineNumber: function () {
-    return this.get('errorMatch')[1]
+    try {
+      return this.get('errorMatch')[1]
+    } catch (e) {
+      return 'unknown';
+    }
   }.property('errorMatch'),
 
   errorColumn: function () {
-    return this.get('errorMatch')[2]
+    try {
+      return this.get('errorMatch')[2]
+    } catch (e) {
+      return 'unknown';
+    }
   }.property('errorMatch'),
 
   errorMatch: function () {
     return this.get('theApplication').stack.match(/<anonymous>:(\d+):(\d+)/)
   }.property('theApplication'),
 
+  transitionOnChange: function() {
+    this.transitionToRoute('index');
+  }.observes('theApplication'),
+
   theApplication: function() {
+    console.log(this.get('routesInput'));
     if(this.oldApp) {
       Em.run(this.oldApp, 'destroy');
     }
