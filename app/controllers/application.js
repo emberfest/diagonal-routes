@@ -4,6 +4,8 @@ import RouteDebug from "diagonal/lib/route-debug";
 export default Ember.Controller.extend({
   isShowingSubStates: false,
 
+  queryParams: ['routesInput'],
+
   routesInput: Em.computed( function() {
     return "this.resource('posts');\n" +
     "this.resource('post', {path: '/posts/:post_id'}, function () {\n" +

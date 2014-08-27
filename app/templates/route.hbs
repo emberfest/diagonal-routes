@@ -19,7 +19,24 @@
   <dt>Template</dt>
   <dd><code>{{value.template.name}}</code></dd>
   <dt>Template Outline</dt>
-  <dt>
+  <dd>
     {{template-visualization parents=parentsAndSelf}}
-  </dt>
+  </dd>
+  <dt>Model Hooks</dt>
+  <dd>
+    <h3>Validation Phase</h3>
+    <p>First all of these model hooks will be called in this order:</p>
+    <ol>
+      {{#each parentsAndSelf}}
+        {{validation-hooks route=this}}
+      {{/each}}
+    </ol>
+    <h3>Setup Phase</h3>
+    <p>If none of the model hooks abort the transition, either by calling <code>transition.abort()</code> or <code>this.transitionTo('someOtherRoute')</code>, then these setup hooks will be called in this order:</p>
+    <ol>
+      {{#each parentsAndSelf}}
+        {{setup-hooks route=this}}
+      {{/each}}
+    </ol>
+  </dd>
 </dl>

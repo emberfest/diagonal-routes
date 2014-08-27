@@ -1,7 +1,11 @@
 export default Ember.Route.extend({
   model: function (params) {
-    return this.controllerFor('application')
+    var route = this.controllerFor('application')
       .routeFor(params.route_name);
+    if(!route) {
+      this.transitionTo('index');
+    }
+    return route;
   },
 
   serialize: function (route) {
