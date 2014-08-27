@@ -1,20 +1,22 @@
-<h2 id='title'>Welcome to Ember.js</h2>
+<div class="container">
+  <h2 id='title'>Welcome to Ember.js</h2>
 
-{{textarea value=routesInput rows=10 cols=100}}
+  {{textarea value=routesInput rows=10 cols=100}}
 
 
-{{#if isError}}
-  <p>
-    There was an error: {{theApplication.message}}
-  </p>
-  <p>
-    Line {{errorLineNumber}} Column {{errorColumn}}
-  </p>
-{{else}}
-  <p>
-    <label>Show loading/error substates
-      {{input type='checkbox' checked=isShowingSubStates}}
-    </label>
-  </p>
-  {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}}
-{{/if}}
+  {{#if isError}}
+    <p>
+      There was an error: {{theApplication.message}}
+    </p>
+    <p>
+      Line {{errorLineNumber}} Column {{errorColumn}}
+    </p>
+  {{else}}
+    <p>
+      <label>Show loading/error substates
+        {{input type='checkbox' checked=isShowingSubStates}}
+      </label>
+    </p>
+    {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}}
+  {{/if}}
+</div>
