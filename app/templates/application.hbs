@@ -2,4 +2,14 @@
 
 {{textarea value=routesInput rows=10 cols=100}}
 
-{{route-displayer route=routeTree}}
+
+{{#if isError}}
+  <p>
+    There was an error: {{theApplication.message}}
+  </p>
+  <p>
+    Line {{errorLineNumber}} Column {{errorColumn}}
+  </p>
+{{else}}
+  {{route-displayer route=routeTree}}
+{{/if}}

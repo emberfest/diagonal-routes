@@ -12,13 +12,32 @@ export default Ember.Controller.extend({
     "this.route('signup');"
   }),
 
-  routeTree: Em.computed('theApplication', function () {
+  routeTree: Em.computed('theApplication', 'isError', function () {
+    if (this.get('isError')) {
+      return null;
+    }
     var rd = RouteDebug.create({
       application: this.get('theApplication')
     });
 
     return rd.get('routeTree');
   }),
+
+  isError: Em.computed('theApplication', function () {
+    return (this.get('theApplication') instanceof Error);
+  }),
+
+  errorLineNumber: function () {
+    return this.get('errorMatch')[1]
+  }.property('errorMatch'),
+
+  errorColumn: function () {
+    return this.get('errorMatch')[2]
+  }.property('errorMatch'),
+
+  errorMatch: function () {
+    return this.get('theApplication').stack.match(/<anonymous>:(\d+):(\d+)/)
+  }.property('theApplication'),
 
   theApplication: function() {
     if(this.oldApp) {
@@ -40,10 +59,10 @@ export default Ember.Controller.extend({
     var Router = App.Router;
     try {
       var evalStr = "Router.map(function(){ " + this.get('routesInput') + " })";
+      eval(evalStr);
     } catch (e) {
       return e;
     }
-    eval(evalStr);
     Ember.run(App, 'advanceReadiness');
     container.lookup('router:main').startRouting();
     this.oldApp = App;
