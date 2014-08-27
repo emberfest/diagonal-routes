@@ -6,7 +6,8 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 var App = Ember.Application.extend({
   modulePrefix: 'diagonal', // TODO: loaded via config
-  Resolver: Resolver
+  Resolver: Resolver,
+  rootElement: '#main-app'
 });
 
 loadInitializers(App, 'diagonal');
