@@ -1,5 +1,5 @@
 <ul>
-  {{#each children}}
-    <li>{{route-displayer route=this}}</li>
+  {{#each child in children}}
+    {{route-displayer route=child isShowingSubStates=isShowingSubStates}}
   {{/each}}
 </ul>

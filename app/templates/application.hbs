@@ -11,5 +11,10 @@
     Line {{errorLineNumber}} Column {{errorColumn}}
   </p>
 {{else}}
-  {{route-displayer route=routeTree}}
+  <p>
+    <label>Show loading/error substates
+      {{input type='checkbox' checked=isShowingSubStates}}
+    </label>
+  </p>
+  {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}}
 {{/if}}
