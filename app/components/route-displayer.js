@@ -5,10 +5,6 @@ export default Ember.Component.extend({
       return true;
     }
 
-    return !this.get('isSubState');
-  }.property('isShowingSubStates', 'isSubState'),
-
-  isSubState: function () {
-    return this.get('route.value.name').match(/(^|\.)(loading|error)$/);
-  }.property('route.value.name')
+    return !this.get('route').isSubState;
+  }.property('isShowingSubStates', 'isSubState')
 });

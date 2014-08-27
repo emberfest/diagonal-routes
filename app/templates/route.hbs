@@ -6,7 +6,7 @@
     {{#if value.url}}
       <code>{{value.url}}</code>
     {{else}}
-      <p>This route has no URL, as it is a parent route. You will always be in a child state of this route (which by default is called <code>{{value.name}}.index</code>)</p>
+      <p class='text-danger'><strong>This route has no URL</strong>, as it is a parent route. You will always be in a child state of this route (e.g. <code>{{value.name}}.index</code>)</p>
     {{/if}}
   </dd>
   <dt>Type</dt>
@@ -19,23 +19,26 @@
   <dd><code>{{value.template.name}}</code></dd>
   <dt>Template Outline</dt>
   <dd>
-    {{template-visualization parents=parentsAndSelf}}
+    {{template-visualization parents=parentsAndSelf isShowingSubStates=isShowingSubStates}}
   </dd>
-  <dt>Model Hooks</dt>
-  <dd>
-    <h3>Validation Phase</h3>
-    <p>First all of these model hooks will be called in this order:</p>
-    <ol>
-      {{#each parentsAndSelf}}
-        {{validation-hooks route=this}}
-      {{/each}}
-    </ol>
-    <h3>Setup Phase</h3>
-    <p>If none of the model hooks abort the transition, either by calling <code>transition.abort()</code> or <code>this.transitionTo('someOtherRoute')</code>, then these setup hooks will be called in this order:</p>
-    <ol>
-      {{#each parentsAndSelf}}
-        {{setup-hooks route=this}}
-      {{/each}}
-    </ol>
-  </dd>
+  {{#if value.url}}
+    <dt>Route Hooks</dt>
+    <dd>
+      <p>When you visit <code>{{value.url}}</code>, these are the route hooks that will be called:</p>
+      <h3>1. Validation Phase</h3>
+      <p>First all of these model hooks will be called in this order:</p>
+      <ol>
+        {{#each parentsAndSelf}}
+          {{validation-hooks route=this}}
+        {{/each}}
+      </ol>
+      <h3>2. Setup Phase</h3>
+      <p>If none of the model hooks abort the transition, either by calling <code>transition.abort()</code> or <code>this.transitionTo('someOtherRoute')</code>, then these setup hooks will be called in this order after all the validation hooks have run:</p>
+      <ol>
+        {{#each parentsAndSelf}}
+          {{setup-hooks route=this}}
+        {{/each}}
+      </ol>
+    </dd>
+  {{/if}}
 </dl>

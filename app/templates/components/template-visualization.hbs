@@ -4,17 +4,23 @@
   </div>
   <div class="panel-body">
     {{#if tail.length}}
-      {{template-visualization parents=tail}}
+      {{template-visualization parents=tail isShowingSubStates=isShowingSubStates}}
     {{else}}
       {{#if hasChildren}}
         <code>\{{outlet}}</code> contains one of:
         <ul>
-          {{#each route.children}}
-            <li>{{link-to value.name 'route' value.name}}</li>
+          {{#each child in route.children}}
+            {{#if child.isSubState}}
+              {{#if isShowingSubStates}}
+                <li>{{link-to child.value.name 'route' child.value.name}}</li>
+              {{/if}}
+            {{else}}
+              <li>{{link-to child.value.name 'route' child.value.name}}</li>
+            {{/if}}
           {{/each}}
         </ul>
       {{else}}
-        No <code>\{{outlet}}</code> in {{name}}
+        No <code>\{{outlet}}</code> in {{name}} because there are no child routes.
       {{/if}}
     {{/if}}
   </div>

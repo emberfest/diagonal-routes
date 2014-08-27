@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2 id='title'>Diagonal Routes</h2>
+      <p>See what route structure, templates and route hooks are for a given ember route definition. Enter your router code below to see the structure:</p>
       {{code-editor value=routesInput}}
     </div>
   </div>
@@ -26,8 +27,8 @@
           </label>
         </p>
         <ul class="nav nav-tabs" role="tablist">
-          <li {{bind-attr class="isShowingTree:active"}}><a href="#" {{action 'showTree'}}>Tree</a></li>
           <li {{bind-attr class="isShowingList:active"}}><a href="#" {{action 'showList'}}>List</a></li>
+          <li {{bind-attr class="isShowingTree:active"}}><a href="#" {{action 'showTree'}}>Tree</a></li>
         </ul>
 
         {{#if isShowingTree}}

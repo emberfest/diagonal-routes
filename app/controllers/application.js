@@ -3,7 +3,7 @@ import RouteDebug from "diagonal/lib/route-debug";
 
 export default Ember.Controller.extend({
   isShowingSubStates: false,
-  isShowingTree: true,
+  isShowingTree: false,
   isShowingList: Em.computed.not('isShowingTree'),
 
   queryParams: ['routesInput'],
@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
       application: this.get('theApplication')
     });
 
-    return this.addParents(rd.get('routeTree'));
+    return this.mungeTree(rd.get('routeTree'));
   }),
 
   routeFor: function (name, start) {
@@ -48,8 +48,9 @@ export default Ember.Controller.extend({
     }
   },
 
-  addParents: function (node, parent, parents) {
+  mungeTree: function (node, parent, parents) {
     node.name = node.value.name;
+    node.isSubState = node.name.match(/(^|\.)(loading|error)$/);
     parents = (parents && parents.slice()) || [];
     if(parent) {
       node.parent = parent;
@@ -58,7 +59,7 @@ export default Ember.Controller.extend({
     node.parents = parents;
     if(node.children && node.children.length) {
       node.children.forEach(function (child) {
-        this.addParents(child, node, parents);
+        this.mungeTree(child, node, parents);
       }, this);
     }
     return node;
