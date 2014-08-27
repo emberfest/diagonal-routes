@@ -5,12 +5,14 @@
 
 
   {{#if isError}}
-    <p>
-      There was an error: {{theApplication.message}}
-    </p>
-    <p>
-      Line {{errorLineNumber}} Column {{errorColumn}}
-    </p>
+    <div class="alert-danger alert">
+      <h4>
+        There was an error: {{theApplication.message}}
+      </h4>
+      <p>
+        Line {{errorLineNumber}} Column {{errorColumn}}
+      </p>
+    </div>
   {{else}}
     <p>
       <label>Show loading/error substates
@@ -19,4 +21,6 @@
     </p>
     {{route-displayer route=routeTree isShowingSubStates=isShowingSubStates}}
   {{/if}}
+
+  {{outlet}}
 </div>

@@ -22,8 +22,39 @@ export default Ember.Controller.extend({
       application: this.get('theApplication')
     });
 
-    return rd.get('routeTree');
+    return this.addParents(rd.get('routeTree'));
   }),
+
+  routeFor: function (name, start) {
+    console.log('searching for route', name, start);
+    var tree = start || this.get('routeTree');
+    if (tree.value.name == name) {
+      console.log('found', tree);
+      return tree;
+    }
+
+    if(tree.children) {
+      var children = tree.children.map(function (child) {
+        return this.routeFor(name, child);
+      }, this).compact();
+
+      if (children.length) {
+        return children[0];
+      }
+    }
+  },
+
+  addParents: function (node, parent) {
+    if(parent) {
+      node.parent = parent;
+    }
+    if(node.children && node.children.length) {
+      node.children.forEach(function (child) {
+        this.addParents(child, node);
+      }, this);
+    }
+    return node;
+  },
 
   isError: Em.computed('theApplication', function () {
     return (this.get('theApplication') instanceof Error);

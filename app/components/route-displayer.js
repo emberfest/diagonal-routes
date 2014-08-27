@@ -1,5 +1,6 @@
-export default Em.Component.extend({
+export default Ember.Component.extend({
   isVisible: function () {
+    if(!this.get('route')) { return false; }
     if(this.get('isShowingSubStates')) {
       return true;
     }

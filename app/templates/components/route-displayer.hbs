@@ -1,6 +1,21 @@
 <li>
   <h1>{{route.value.name}}</h1>
-  <h2>Url: <code>{{route.value.url}}</code></h2>
-
+  <dl>
+    <dt>Url</dt>
+    <dd><code>{{route.value.url}}</code></dd>
+    <dt>Type</dt>
+    <dd>{{route.value.type}}</dd>
+    <dt>Route Class</dt>
+    <dd><code>{{route.value.routeHandler.className}}</code></dd>
+    <dt>Controller</dt>
+    <dd><code>App.{{route.value.controller.className}}</code></dd>
+    <dt>Template</dt>
+    <dd><code>{{route.value.template.name}}.hbs</code></dd>
+    <dt>Parent</dt>
+    <dd>{{route.parent.value.name}}</dd>
+    <dt>Details</dt>
+    <dd>{{link-to 'Details' 'route' route}}</dd>
+  </dl>
+  {{log route}}
   {{route-children children=route.children isShowingSubStates=isShowingSubStates}}
 </li>
