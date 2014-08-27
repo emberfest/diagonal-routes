@@ -30,10 +30,8 @@ export default Ember.Controller.extend({
   }),
 
   routeFor: function (name, start) {
-    console.log('searching for route', name, start);
     var tree = start || this.get('routeTree');
     if (tree.value.name == name) {
-      console.log('found', tree);
       return tree;
     }
 
@@ -49,6 +47,7 @@ export default Ember.Controller.extend({
   },
 
   addParents: function (node, parent, parents) {
+    node.name = node.value.name;
     parents = (parents && parents.slice()) || [];
     if(parent) {
       node.parent = parent;
@@ -92,7 +91,6 @@ export default Ember.Controller.extend({
   }.observes('theApplication'),
 
   theApplication: function() {
-    console.log(this.get('routesInput'));
     if(this.oldApp) {
       Em.run(this.oldApp, 'destroy');
     }
@@ -120,5 +118,11 @@ export default Ember.Controller.extend({
     container.lookup('router:main').startRouting();
     this.oldApp = App;
     return App;
-  }.property('routesInput')
+  }.property('routesInput'),
+
+  actions: {
+    showRoute: function(route) {
+      this.transitionToRoute('route', route.name);
+    }
+  }
 });
