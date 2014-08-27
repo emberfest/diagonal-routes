@@ -12,13 +12,14 @@
   <dt>Type</dt>
   <dd>{{value.type}}</dd>
   <dt>Route Class</dt>
-  <dd><code>{{value.routeHandler.className}}</code></dd>
+  <dd><code>App.{{value.routeHandler.className}}</code></dd>
   <dt>Controller</dt>
   <dd><code>App.{{value.controller.className}}</code></dd>
   <dt>Template</dt>
   <dd><code>{{value.template.name}}</code></dd>
   <dt>Template Outline</dt>
   <dd>
+    <p>This is what the nested templates look like for this route. All templates shown below will be visible <em>at the same time</em> when you are in this route:</p>
     {{template-visualization parents=parentsAndSelf isShowingSubStates=isShowingSubStates}}
   </dd>
   {{#if value.url}}
