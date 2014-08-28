@@ -16,22 +16,26 @@
 
 
   {{#if isError}}
-    <div class="alert-danger alert">
-      <h4>
-        There was an error: {{theApplication.message}}
-      </h4>
-      <p>
-        Line {{errorLineNumber}} Column {{errorColumn}}
-      </p>
-    </div>
+    <p>
+      <div class="alert-danger alert">
+        <h4>
+          There was an error: {{theApplication.message}}
+        </h4>
+        <p>
+          Line {{errorLineNumber}} Column {{errorColumn}}
+        </p>
+      </div>
+    </p>
   {{else}}
+    <p>
+      <div class="pull-right">
+        <label>Show loading/error substates
+          {{input type='checkbox' checked=isShowingSubStates}}
+        </label>
+      </div>
+    </p>
     <div class="row">
       <div class="col-md-6">
-        <p>
-          <label>Show loading/error substates
-            {{input type='checkbox' checked=isShowingSubStates}}
-          </label>
-        </p>
         <ul class="nav nav-tabs" role="tablist">
           <li {{bind-attr class="isShowingList:active"}}><a href="#" {{action 'showList'}}>List</a></li>
           <li {{bind-attr class="isShowingTree:active"}}><a href="#" {{action 'showTree'}}>Tree</a></li>
