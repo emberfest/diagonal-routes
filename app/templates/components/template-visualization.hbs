@@ -1,6 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    {{link-to name 'route' name}}
+    {{#link-to 'route' name}}
+      {{route.value.template.name}}.hbs
+    {{/link-to}}
   </div>
   <div class="panel-body">
     {{#if tail.length}}
@@ -20,7 +22,7 @@
           {{/each}}
         </ul>
       {{else}}
-        No <code>\{{outlet}}</code> in {{name}} because there are no child routes.
+        No <code>\{{outlet}}</code> in <code>{{route.value.template.name}}.hbs</code> because there are no child routes.
       {{/if}}
     {{/if}}
   </div>
