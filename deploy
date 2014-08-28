@@ -3,6 +3,7 @@
 set -e
 set -x
 
+ember build --environment=production
 ssh blog@alexspeller.com "rm -rf diagonal-upload"
 scp -r -C dist blog@alexspeller.com:diagonal-upload
 ssh blog@alexspeller.com 'mv diagonal "diagonal-bu-`date`" && mv diagonal-upload diagonal && chmod +x diagonal'
