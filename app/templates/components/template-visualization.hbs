@@ -6,7 +6,7 @@
   </div>
   <div class="panel-body">
     {{#if tail.length}}
-      {{template-visualization parents=tail isShowingSubStates=isShowingSubStates}}
+      {{template-visualization parents=tail isShowingSubStates=isShowingSubStates usePods=usePods podModulePrefix=podModulePrefix}}
     {{else}}
       {{#if hasChildren}}
         <code>\{{outlet}}</code> contains one of:
@@ -22,7 +22,7 @@
           {{/each}}
         </ul>
       {{else}}
-        No <code>\{{outlet}}</code> in <code>{{route.value.template.name}}.hbs</code> because there are no child routes.
+        No <code>\{{outlet}}</code> in <code>{{templateFile}}</code> because there are no child routes.
       {{/if}}
     {{/if}}
   </div>

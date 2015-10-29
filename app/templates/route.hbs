@@ -1,5 +1,15 @@
 <h1>Showing route {{value.name}}</h1>
+<label>
+  {{input type="checkbox" checked=usePods}}
+  Use Pods
+</label>
 
+{{#if usePods}}
+  <div class="form-group">
+    <label>Pod Module Prefix</label>
+    {{input type='text' value=podModulePrefix class='form-control'}}
+  </div>
+{{/if}}
 <dl>
   <dt>Url</dt>
   <dd>
@@ -9,18 +19,16 @@
       <p class='text-danger'><strong>This route has no URL</strong>, as it is a parent route. You will always be in a child state of this route (e.g. <code>{{value.name}}.index</code>)</p>
     {{/if}}
   </dd>
-  <dt>Type</dt>
-  <dd>{{value.type}}</dd>
-  <dt>Route Class</dt>
-  <dd><code>App.{{value.routeHandler.className}}</code></dd>
+  <dt>Route</dt>
+  <dd><code>{{routeFile}}</code></dd>
   <dt>Controller</dt>
-  <dd><code>App.{{value.controller.className}}</code></dd>
+  <dd><code>{{controllerFile}}</code></dd>
   <dt>Template</dt>
-  <dd><code>{{value.template.name}}.hbs</code></dd>
+  <dd><code>{{templateFile}}</code></dd>
   <dt>Template Outline</dt>
   <dd>
     <p>This is what the nested templates look like for this route. All templates shown below will be visible <em>at the same time</em> when you are in this route:</p>
-    {{template-visualization parents=parentsAndSelf isShowingSubStates=isShowingSubStates}}
+    {{template-visualization parents=parentsAndSelf isShowingSubStates=isShowingSubStates usePods=usePods podModulePrefix=podModulePrefix}}
   </dd>
   {{#if value.url}}
     <dt>Route Hooks</dt>

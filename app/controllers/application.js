@@ -9,11 +9,11 @@ export default Ember.Controller.extend({
   queryParams: ['routesInput'],
 
   routesInput: Em.computed( function() {
-    return "this.resource('posts');\n" +
-    "this.resource('post', {path: '/posts/:post_id'}, function () {\n" +
+    return "this.route('posts');\n" +
+    "this.route('post', {path: '/posts/:post_id'}, function () {\n" +
     "  this.route('new');\n" +
     "  this.route('edit');\n" +
-    "  this.resource('comments', function() {\n" +
+    "  this.route('comments', function() {\n" +
     "    this.route('new');\n" +
     "  });\n" +
     "});\n" +
