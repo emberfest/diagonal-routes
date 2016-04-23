@@ -2,16 +2,16 @@ var classify = Ember.String.classify;
 
 var RouteDebug = Ember.Object.extend({
 
-  router: Ember.computed(function() {
+  router: Ember.computed('application', function() {
     return this.get('application.__container__').lookup('router:main');
-  }).property('application'),
+  }),
 
-  applicationController: Ember.computed(function() {
+  applicationController: Ember.computed('application', function() {
     var container = this.get('application.__container__');
     return container.lookup('controller:application');
-  }).property('application'),
+  }),
 
-  routeTree: Ember.computed(function() {
+  routeTree: Ember.computed('router', function() {
     var routeNames = this.get('router.router.recognizer.names');
     var routeTree = {};
 
@@ -25,7 +25,7 @@ var RouteDebug = Ember.Object.extend({
     }
 
     return arrayizeChildren({  children: routeTree }).children[0];
-  }).property('router')
+  })
 });
 
 
